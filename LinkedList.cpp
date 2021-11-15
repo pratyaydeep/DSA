@@ -37,12 +37,25 @@ public:
     }
 
     ll middle_element(linked_list *head){
-        linked_list *sp=head,*fp=head;
+        linked_list *sp=head,*fp=head; //slow pointer and fast pointer
         while(fp!=NULL and fp->next!=NULL){
             sp=sp->next;
             fp=fp->next->next;
         }
         return sp->data;
+    }
+
+    linked_list *delete_middle(linked_list *head){
+        linked_list *sp=head,*fp=head; //slow pointer and fast pointer
+        linked_list *pre=sp; //pevious of slow pointer
+        while(fp!=NULL and fp->next!=NULL){
+            pre=sp;
+            sp=sp->next;
+            fp=fp->next->next;
+        }
+        pre->next=sp->next;
+        delete sp;
+        return head;
     }
 };
 
@@ -62,5 +75,8 @@ signed main(){
 
     cout<<head->middle_element(head)<<nl;
 
+    head=head->delete_middle(head);
+    head->print(head);
+    cout<<nl;
     return 0;
 }
