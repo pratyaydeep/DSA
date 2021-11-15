@@ -2,6 +2,7 @@
 using namespace std;
 
 #define ll long long
+#define nl '\n'
 
 class linked_list{
 public:
@@ -34,6 +35,15 @@ public:
             temp=temp->next;
         }
     }
+
+    ll middle_element(linked_list *head){
+        linked_list *sp=head,*fp=head;
+        while(fp!=NULL and fp->next!=NULL){
+            sp=sp->next;
+            fp=fp->next->next;
+        }
+        return sp->data;
+    }
 };
 
 signed main(){
@@ -45,7 +55,12 @@ signed main(){
     head=head->add(3,head);
     head=head->add(4,head);
     head=head->add(5,head);
+    head=head->add(6,head);
 
     head->print(head);
+    cout<<nl;
+
+    cout<<head->middle_element(head)<<nl;
+
     return 0;
 }
