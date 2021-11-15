@@ -67,6 +67,48 @@ public:
         }
         return head;
     }
+
+    void print_reverse(linked_list *head){
+        if(head==NULL) return;
+        else{
+            print_reverse(head->next);
+            cout<<head->data<<" ";
+        }
+    }
+
+    linked_list *reverse_linked_list(linked_list *head){
+        linked_list *cur=head, *next=head, *pre=NULL;
+        while(cur!=NULL){
+            next=cur->next;
+            cur->next=pre;
+            pre=cur;
+            cur=next;
+        }
+        return pre;
+    }
+
+    bool is_palindrome(auto &left, auto right){
+        if(right==NULL) return true;
+        bool first=is_palindrome(left, right->next);
+        if(first==false) return false;
+        bool second=(right->data==left->data);
+        left=left->next;
+        return second;
+    }
+
+    linked_list *remove_duplicates_sorted(auto head){
+        auto cur=head;
+        while(cur->next!=NULL){
+            if(cur->data==cur->next->data){
+                auto temp=cur->next;
+                cur->next=temp->next;
+                delete temp;
+            }else{
+                cur=cur->next;
+            }
+        }
+        return head;
+    }
 };
 
 signed main(){
@@ -76,9 +118,9 @@ signed main(){
     head=head->add(1,head);
     head=head->add(2,head);
     head=head->add(3,head);
-    head=head->add(4,head);
+    head=head->add(3,head);
+    head=head->add(3,head);
     head=head->add(5,head);
-    head=head->add(6,head);
 
     head->print(head);
     cout<<nl;
@@ -89,10 +131,18 @@ signed main(){
     // head->print(head);
     // cout<<nl;
 
-    head=head->delete_liked_list(head);
+    // head=head->delete_liked_list(head);
 
-    if(head==NULL) cout<<"Empty Linked List";
-    else head->print(head);
+    // if(head==NULL) cout<<"Empty Linked List";
+    // else head->print(head);
+
+    // head->print_reverse(head);
+
+    // head=head->reverse_linked_list(head);
+    // head->print(head);
+
+    head=head->remove_duplicates_sorted(head);
+    head->print(head);
 
     return 0;
 }
