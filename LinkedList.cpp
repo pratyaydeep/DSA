@@ -57,6 +57,16 @@ public:
         delete sp;
         return head;
     }
+
+    linked_list *delete_liked_list(linked_list *head){
+        linked_list *pre=head;
+        while(head!=NULL){
+            pre=head;
+            head=head->next;
+            delete pre;
+        }
+        return head;
+    }
 };
 
 signed main(){
@@ -73,10 +83,16 @@ signed main(){
     head->print(head);
     cout<<nl;
 
-    cout<<head->middle_element(head)<<nl;
+    // cout<<head->middle_element(head)<<nl;
 
-    head=head->delete_middle(head);
-    head->print(head);
-    cout<<nl;
+    // head=head->delete_middle(head);
+    // head->print(head);
+    // cout<<nl;
+
+    head=head->delete_liked_list(head);
+
+    if(head==NULL) cout<<"Empty Linked List";
+    else head->print(head);
+
     return 0;
 }
