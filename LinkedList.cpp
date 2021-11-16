@@ -109,6 +109,22 @@ public:
         }
         return head;
     }
+
+    auto remove_duplicates_unsorted(auto head){
+        set<ll> vis;
+        auto cur=head,pre=cur;
+        while(cur!=NULL){
+            if(vis.count(cur->data)){
+                pre->next=cur->next;
+                delete cur;
+            }
+            else{
+                vis.insert(cur->data);
+                pre=cur;
+            }
+            cur=pre->next;
+        }
+    }
 };
 
 signed main(){
@@ -116,11 +132,11 @@ signed main(){
 
     linked_list *head=NULL;
     head=head->add(1,head);
+    head=head->add(3,head);
     head=head->add(2,head);
+    head=head->add(4,head);
     head=head->add(3,head);
-    head=head->add(3,head);
-    head=head->add(3,head);
-    head=head->add(5,head);
+    head=head->add(4,head);
 
     head->print(head);
     cout<<nl;
@@ -141,7 +157,9 @@ signed main(){
     // head=head->reverse_linked_list(head);
     // head->print(head);
 
-    head=head->remove_duplicates_sorted(head);
+    //head=head->remove_duplicates_sorted(head);
+
+    head->remove_duplicates_unsorted(head);
     head->print(head);
 
     return 0;
