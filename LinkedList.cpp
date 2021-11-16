@@ -172,6 +172,18 @@ public:
         }
         return cur1->data;
     }
+
+    auto odd_even(auto head){
+        auto o=head,e=head->next, temp=e;
+        while(e!=NULL and e->next!=NULL){
+            o->next=e->next;
+            o=o->next;
+            e->next=o->next;
+            e=e->next;
+        }
+        o->next=temp;
+        return head;
+    }
 };
 
 signed main(){
@@ -223,24 +235,29 @@ signed main(){
     head1=head1->add(3,head1);
     head1=head1->add(4,head1);
     head1=head1->add(5,head1);
+    head1=head1->add(6,head1);
 
     head2=head2->add(8,head2);
     head2=head2->add(6,head2);
     
     
-    auto cur=head2, temp=head1;
-    while(cur->next)
-        cur=cur->next;
-    while(temp->data!=4)
-        temp=temp->next;
-    cur->next=temp;
+    // auto cur=head2, temp=head1;
+    // while(cur->next)
+    //     cur=cur->next;
+    // while(temp->data!=4)
+    //     temp=temp->next;
+    // cur->next=temp;
 
     head1->print(head1);
     cout<<nl;
     head2->print(head2);
     cout<<nl;
 
-    cout<<head1->intersection_point(head1,head2)<<nl;
+    // cout<<head1->intersection_point(head1,head2)<<nl;
+
+    head1=head1->odd_even(head1);
+    head1->print(head1);
+    cout<<nl;
 
     return 0;
 }
