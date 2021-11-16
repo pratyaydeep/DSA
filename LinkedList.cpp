@@ -184,6 +184,34 @@ public:
         o->next=temp;
         return head;
     }
+
+    auto merge(auto h1, auto h2){
+        if(h1==NULL or h2==NULL){
+            return (h1==NULL) ? h2 : h1;
+        }
+        if(h1->data<h2->data){
+            h1->next=merge(h1->next,h2);
+            return h1;
+        }else{
+            h2->next=merge(h1,h2->next);
+            return h2;
+        }
+    }
+
+    auto mergesort(auto head){
+        if(head==NULL or head->next==NULL)
+            return head;
+        auto sp=head, fp=head,pre=sp;
+        while(fp and fp->next){
+            pre=sp;
+            sp=sp->next;
+            fp=fp->next->next;
+        }
+        pre->next=NULL;
+        auto h1=mergesort(head);
+        auto h2=mergesort(sp);
+        return merge(h1,h2);
+    }
 };
 
 signed main(){
@@ -230,15 +258,15 @@ signed main(){
     // cout<<head->detect_loop(head);
 
     linked_list *head1=NULL, *head2=NULL;
+    head1=head1->add(6,head1);
+    head1=head1->add(4,head1);
     head1=head1->add(1,head1);
+    head1=head1->add(5,head1);
     head1=head1->add(2,head1);
     head1=head1->add(3,head1);
-    head1=head1->add(4,head1);
-    head1=head1->add(5,head1);
-    head1=head1->add(6,head1);
 
-    head2=head2->add(8,head2);
-    head2=head2->add(6,head2);
+    // head2=head2->add(8,head2);
+    // head2=head2->add(6,head2);
     
     
     // auto cur=head2, temp=head1;
@@ -250,12 +278,13 @@ signed main(){
 
     head1->print(head1);
     cout<<nl;
-    head2->print(head2);
-    cout<<nl;
+    // head2->print(head2);
+    // cout<<nl;
 
     // cout<<head1->intersection_point(head1,head2)<<nl;
 
-    head1=head1->odd_even(head1);
+    // head1=head1->odd_even(head1);
+    head1=head1->mergesort(head1);
     head1->print(head1);
     cout<<nl;
 
