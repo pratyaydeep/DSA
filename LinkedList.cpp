@@ -156,26 +156,41 @@ public:
             return head;
         }
     }
+
+    ll intersection_point(auto head1, auto head2){
+        auto cur1=head1, cur2=head2;
+        while(cur1!=cur2){
+            if(cur1==NULL)
+                cur1=head2;
+            else
+                cur1=cur1->next;
+
+            if(cur2==NULL)
+                cur2=head1;
+            else
+                cur2=cur2->next;
+        }
+        return cur1->data;
+    }
 };
 
 signed main(){
-    // TODO: start from slow pointers and fast pointers
 
-    linked_list *head=NULL;
-    head=head->add(1,head);
-    head=head->add(2,head);
-    head=head->add(3,head);
-    head=head->add(4,head);
-    head=head->add(5,head);
-    head=head->add(6,head);
+    // linked_list *head=NULL;
+    // head=head->add(1,head);
+    // head=head->add(2,head);
+    // head=head->add(3,head);
+    // head=head->add(4,head);
+    // head=head->add(5,head);
+    // head=head->add(6,head);
 
-    auto cur=head, temp=head;
-    while(cur->next) cur=cur->next;
-    while(temp->data!=2) temp=temp->next;
-    cur->next=temp;
+    // auto cur=head, temp=head;
+    // while(cur->next) cur=cur->next;
+    // while(temp->data!=2) temp=temp->next;
+    // cur->next=temp;
 
-    //head->print(head);
-    cout<<nl;
+    // //head->print(head);
+    // cout<<nl;
 
     // cout<<head->middle_element(head)<<nl;
 
@@ -193,14 +208,39 @@ signed main(){
     // head=head->reverse_linked_list(head);
     // head->print(head);
 
-    //head=head->remove_duplicates_sorted(head);
+    // head=head->remove_duplicates_sorted(head);
 
     // head=head->remove_duplicates_unsorted(head);
     // head->print(head);
 
-    cout<<head->detect_loop(head)<<nl;
-    head=head->remove_loop(head);
-    cout<<head->detect_loop(head);
+    // cout<<head->detect_loop(head)<<nl;
+    // head=head->remove_loop(head);
+    // cout<<head->detect_loop(head);
+
+    linked_list *head1=NULL, *head2=NULL;
+    head1=head1->add(1,head1);
+    head1=head1->add(2,head1);
+    head1=head1->add(3,head1);
+    head1=head1->add(4,head1);
+    head1=head1->add(5,head1);
+
+    head2=head2->add(8,head2);
+    head2=head2->add(6,head2);
+    
+    
+    auto cur=head2, temp=head1;
+    while(cur->next)
+        cur=cur->next;
+    while(temp->data!=4)
+        temp=temp->next;
+    cur->next=temp;
+
+    head1->print(head1);
+    cout<<nl;
+    head2->print(head2);
+    cout<<nl;
+
+    cout<<head1->intersection_point(head1,head2)<<nl;
 
     return 0;
 }
