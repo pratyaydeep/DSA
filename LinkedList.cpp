@@ -124,6 +124,37 @@ public:
             }
             cur=pre->next;
         }
+        return head;
+    }
+
+    bool detect_loop(auto head){
+        auto sp=head, fp=head;
+        while(fp and fp->next){
+            sp=sp->next;
+            fp=fp->next->next;
+            if(sp==fp)
+                return true; 
+        }
+        return false;
+    }
+    auto remove_loop(auto head){
+        auto sp=head, fp=head;
+        while(fp and fp->next){
+            sp=sp->next;
+            fp=fp->next->next;
+            if(sp==fp)
+                break; 
+        }
+        if(sp==fp){
+            sp=head;
+            while(sp->next!=fp->next){
+                sp=sp->next;
+                fp=fp->next;
+            }
+            fp->next=NULL;
+        }else{
+            return head;
+        }
     }
 };
 
@@ -132,13 +163,18 @@ signed main(){
 
     linked_list *head=NULL;
     head=head->add(1,head);
-    head=head->add(3,head);
     head=head->add(2,head);
-    head=head->add(4,head);
     head=head->add(3,head);
     head=head->add(4,head);
+    head=head->add(5,head);
+    head=head->add(6,head);
 
-    head->print(head);
+    auto cur=head, temp=head;
+    while(cur->next) cur=cur->next;
+    while(temp->data!=2) temp=temp->next;
+    cur->next=temp;
+
+    //head->print(head);
     cout<<nl;
 
     // cout<<head->middle_element(head)<<nl;
@@ -159,8 +195,12 @@ signed main(){
 
     //head=head->remove_duplicates_sorted(head);
 
-    head->remove_duplicates_unsorted(head);
-    head->print(head);
+    // head=head->remove_duplicates_unsorted(head);
+    // head->print(head);
+
+    cout<<head->detect_loop(head)<<nl;
+    head=head->remove_loop(head);
+    cout<<head->detect_loop(head);
 
     return 0;
 }
