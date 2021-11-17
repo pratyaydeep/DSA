@@ -60,6 +60,42 @@ public:
             if(temp->right!=NULL) q.push(temp->right);
         }
     }
+
+    void left_view(tree* root){
+        queue<tree*> q;
+        q.push(root);
+        while(!q.empty()){
+            int sz=q.size();
+            for(int i=1;i<=sz;i++){
+                auto temp=q.front();
+                q.pop();
+                if(i==1)
+                    cout<<temp->val<<" ";
+                if(temp->left)
+                    q.push(temp->left);
+                if(temp->right)
+                    q.push(temp->right);
+            }
+        }
+    }
+
+    void right_view(tree* root){
+        queue<tree*> q;
+        q.push(root);
+        while(!q.empty()){
+            int sz=q.size();
+            for(int i=1;i<=sz;i++){
+                auto temp=q.front();
+                q.pop();
+                if(i==sz)
+                    cout<<temp->val<<" ";
+                if(temp->left)
+                    q.push(temp->left);
+                if(temp->right)
+                    q.push(temp->right);
+            }
+        }
+    }
 };
 
 signed main(){
@@ -82,7 +118,9 @@ signed main(){
     root=root->insert(6,root);
     root=root->insert(9,root);
     
-    root->level_order_traversal(root);
+    //root->level_order_traversal(root);
 
+    //root->left_view(root);
+    root->right_view(root);
     return 0;
 }
