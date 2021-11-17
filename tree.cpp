@@ -48,21 +48,41 @@ public:
         postorder(root->right);
         cout<<root->val<<" ";
     }
+
+    void level_order_traversal(tree* root){
+        queue<tree*> q;
+        q.push(root);
+        while(!q.empty()){
+            auto temp=q.front();
+            q.pop();
+            cout<<temp->val<<" ";
+            if(temp->left!=NULL) q.push(temp->left);
+            if(temp->right!=NULL) q.push(temp->right);
+        }
+    }
 };
 
 signed main(){
     tree *root=NULL;
-    root=root->insert(10,root);
-    root=root->insert(11,root);
-    root=root->insert(6,root);
-    root=root->insert(4,root);
-    root->inorder(root);
-    cout<<nl;
-    root->preorder(root);
-    cout<<nl;
-    root->postorder(root);
-    cout<<nl;
+    // root=root->insert(10,root);
+    // root=root->insert(11,root);
+    // root=root->insert(6,root);
+    // root=root->insert(4,root);
+    // root->inorder(root);
+    // cout<<nl;
+    // root->preorder(root);
+    // cout<<nl;
+    // root->postorder(root);
+    // cout<<nl;
 
+    root=root->insert(7,root);
+    root=root->insert(5,root);
+    root=root->insert(8,root);
+    root=root->insert(4,root);
+    root=root->insert(6,root);
+    root=root->insert(9,root);
+    
+    root->level_order_traversal(root);
 
     return 0;
 }
