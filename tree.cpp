@@ -135,6 +135,23 @@ public:
         for(auto i:mp)
             cout<<i.second<<" ";
     }
+
+    int get_tree_height(tree* root){
+        if(root==NULL) return 0;
+        int l=get_tree_height(root->left);
+        int r=get_tree_height(root->right);
+        return 1+max(l,r);
+    }
+
+    tree* array_to_bst(ll *a, ll st, ll end){
+        if(st>end) return NULL;
+    
+        ll middle=(st+end)>>1;
+        tree* root=new tree(a[middle]);
+        root->left=array_to_bst(a, st, middle-1);
+        root->right=array_to_bst(a, middle+1, end);
+        return root;
+    }
 };
 
 signed main(){
@@ -162,14 +179,22 @@ signed main(){
     //root->left_view(root);
     // root->right_view(root);
 
-    root=root->insert(7,root);
-    root=root->insert(2,root);
-    root=root->insert(8,root);
-    root=root->insert(1,root);
-    root=root->insert(5,root);
-    root->print_top_view(root);
-    cout<<nl;
-    root->print_bottom_view(root);
+    // root=root->insert(7,root);
+    // root=root->insert(2,root);
+    // root=root->insert(8,root);
+    // root=root->insert(1,root);
+    // root=root->insert(5,root);
+    // root->print_top_view(root);
+    // cout<<nl;
+    // root->print_bottom_view(root);
+    // cout<<nl;
+    // cout<<root->max_depth(root);
 
+    ll a[]={1,2,3,4,5};
+    //tree* root=NULL;
+    root=root->array_to_bst(a, 0, 4);
+    root->inorder(root);
+    cout<<nl;
+    root->preorder(root);
     return 0;
 }
