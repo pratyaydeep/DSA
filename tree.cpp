@@ -96,6 +96,26 @@ public:
             }
         }
     }
+
+    void print_top_view(tree* root){
+        map<int,int> mp;
+        queue<pair<tree*, int>> q;
+        q.push({root,0});
+        while(!q.empty()){
+            auto temp=q.front();
+            q.pop();
+            int hd=temp.second;
+            auto node=temp.first;
+            if(mp.count(hd)==0)
+                mp[hd]=node->val;
+            if(node->left)
+                q.push({node->left,hd-1});
+            if(node->right)
+                q.push({node->right,hd+1});
+        }
+        for(auto i:mp)
+            cout<<i.second<<" ";
+    }
 };
 
 signed main(){
@@ -111,16 +131,24 @@ signed main(){
     // root->postorder(root);
     // cout<<nl;
 
-    root=root->insert(7,root);
-    root=root->insert(5,root);
-    root=root->insert(8,root);
-    root=root->insert(4,root);
-    root=root->insert(6,root);
-    root=root->insert(9,root);
+    // root=root->insert(7,root);
+    // root=root->insert(5,root);
+    // root=root->insert(8,root);
+    // root=root->insert(4,root);
+    // root=root->insert(6,root);
+    // root=root->insert(9,root);
     
     //root->level_order_traversal(root);
 
     //root->left_view(root);
-    root->right_view(root);
+    // root->right_view(root);
+
+    root=root->insert(7,root);
+    root=root->insert(2,root);
+    root=root->insert(8,root);
+    root=root->insert(1,root);
+    root=root->insert(5,root);
+    root->print_top_view(root);
+
     return 0;
 }
