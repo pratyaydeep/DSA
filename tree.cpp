@@ -116,6 +116,25 @@ public:
         for(auto i:mp)
             cout<<i.second<<" ";
     }
+
+    void print_bottom_view(tree* root){
+        map<int,int> mp;
+        queue<pair<tree*, int>> q;
+        q.push({root,0});
+        while(!q.empty()){
+            auto temp=q.front();
+            q.pop();
+            int hd=temp.second;
+            auto node=temp.first;
+            mp[hd]=node->val;
+            if(node->left)
+                q.push({node->left,hd-1});
+            if(node->right)
+                q.push({node->right,hd+1});
+        }
+        for(auto i:mp)
+            cout<<i.second<<" ";
+    }
 };
 
 signed main(){
@@ -149,6 +168,8 @@ signed main(){
     root=root->insert(1,root);
     root=root->insert(5,root);
     root->print_top_view(root);
+    cout<<nl;
+    root->print_bottom_view(root);
 
     return 0;
 }
