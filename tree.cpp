@@ -5,10 +5,10 @@ using namespace std;
 #define nl '\n'
 
 class tree{
-private:
+public:
     ll val;
     tree *left, *right;
-public:
+
     tree(ll value){
         this->val=value;
         this->left=NULL;
@@ -174,6 +174,16 @@ public:
             return false;
         return is_identical(root1->left, root2->left) and is_identical(root1->right,root2->right);
     }
+
+    bool is_mirror_tree(tree* root1, tree* root2){
+        if(root1==NULL and root2==NULL)
+            return true;
+        if(root1==NULL or root2==NULL)
+            return false;
+        if(root1->val!=root2->val)
+            return false;
+        return is_mirror_tree(root1->left, root2->right) and is_mirror_tree(root1->right,root2->left);
+    }
 };
 
 signed main(){
@@ -239,12 +249,18 @@ signed main(){
     root1=root->insert(1,root1);
     root1=root->insert(5,root1);
 
-    root2=root2->insert(7,root2);
-    root2=root2->insert(2,root2);
-    root2=root2->insert(8,root2);
-    root2=root2->insert(1,root2);
-    root2=root2->insert(4,root2);
+    // root2=root2->insert(7,root2);
+    // root2=root2->insert(2,root2);
+    // root2=root2->insert(8,root2);
+    // root2=root2->insert(1,root2);
+    // root2=root2->insert(4,root2);
 
-    cout<<root1->is_identical(root1,root2);
+    root2=new tree(7);
+    root2->left=new tree(8);
+    root2->right=new tree(2);
+    root2->right->left=new tree(5);
+    root2->right->right=new tree(1);
+
+    cout<<root1->is_mirror_tree(root1,root2);
     return 0;
 }
