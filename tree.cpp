@@ -6,7 +6,7 @@ using namespace std;
 
 class tree{
 public:
-    ll val;
+    int val;
     tree *left, *right;
 
     tree(ll value){
@@ -15,7 +15,7 @@ public:
         this->right=NULL;
     }
 
-    tree *insert(ll value, tree *root){
+    tree *insert(int value, tree *root){
         if(root==NULL)
             return new tree(value);
         else if(value<root->val)
@@ -184,6 +184,25 @@ public:
             return false;
         return is_mirror_tree(root1->left, root2->right) and is_mirror_tree(root1->right,root2->left);
     }
+
+    void serialize_tree(tree* root, FILE *fp){
+        if(root==NULL){
+            fprintf(fp, "%d ", -1);
+            return;
+        }
+        fprintf(fp, "%d ",root->val);
+        serialize_tree(root->left, fp);
+        serialize_tree(root->right, fp);
+    }
+
+    tree* deserialize(FILE *fp){
+        int value;
+        if(!fscanf(fp,"%d",&value) or value==-1) return NULL;
+        tree *root=new tree(value);
+        root->left=deserialize(fp);
+        root->right=deserialize(fp);
+        return root;
+    }
 };
 
 signed main(){
@@ -255,12 +274,22 @@ signed main(){
     // root2=root2->insert(1,root2);
     // root2=root2->insert(4,root2);
 
-    root2=new tree(7);
-    root2->left=new tree(8);
-    root2->right=new tree(2);
-    root2->right->left=new tree(5);
-    root2->right->right=new tree(1);
+    // root2=new tree(7);
+    // root2->left=new tree(8);
+    // root2->right=new tree(2);
+    // root2->right->left=new tree(5);
+    // root2->right->right=new tree(1);
 
-    cout<<root1->is_mirror_tree(root1,root2);
+    // cout<<root1->is_mirror_tree(root1,root2);
+
+    FILE *fp=fopen("serialize_deserialize.txt", "w");
+    root1->serialize_tree(root1, fp);
+    fclose(fp);
+
+    fp=fopen("serialize_deserialize.txt", "r");
+    root2=root2->deserialize(fp);
+    root2->inorder(root2);
+    cout<<nl;
+    root2->preorder(root2);
     return 0;
 }
