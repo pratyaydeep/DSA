@@ -152,6 +152,18 @@ public:
         root->right=array_to_bst(a, middle+1, end);
         return root;
     }
+
+    tree* create_tree_preorder_inorder(int &pre_idx, int st, int end, int* pre, auto &mp){
+        if(st>end) return NULL;
+
+        tree *root=new tree(pre[pre_idx]);
+        int idx=mp[pre[pre_idx]];
+        pre_idx++;
+        root->left=create_tree_preorder_inorder(pre_idx,st,idx-1,pre,mp);
+        root->right=create_tree_preorder_inorder(pre_idx,idx+1,end,pre,mp);
+
+        return root;
+    }
 };
 
 signed main(){
@@ -190,11 +202,24 @@ signed main(){
     // cout<<nl;
     // cout<<root->max_depth(root);
 
-    ll a[]={1,2,3,4,5};
-    //tree* root=NULL;
-    root=root->array_to_bst(a, 0, 4);
+    // ll a[]={1,2,3,4,5};
+    // //tree* root=NULL;
+    // root=root->array_to_bst(a, 0, 4);
+    // root->inorder(root);
+    // cout<<nl;
+    // root->preorder(root);
+    
+    int in[]={3,1,4,0,5,2};
+    int pre[]={0,1,3,4,2,5};
+    unordered_map<int,int> mp;
+    for(int i=0;i<6;i++)
+        mp[in[i]]=i;
+    int pre_idx=0;
+    root=root->create_tree_preorder_inorder(pre_idx,0,5,pre,mp);
     root->inorder(root);
     cout<<nl;
     root->preorder(root);
+    cout<<nl;
+    root->postorder(root);
     return 0;
 }
