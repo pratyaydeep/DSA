@@ -203,6 +203,21 @@ public:
         root->right=deserialize(fp);
         return root;
     }
+
+    void binary_tree_to_dll(tree* root, auto &head, auto &prev){
+        if(!root) return;
+        binary_tree_to_dll(root->left,head,prev);
+        //ROOT
+        if(prev==NULL){
+            head=root;
+        }else{
+            root->left=prev;
+            prev->right=root;
+        }
+        prev=root;
+        binary_tree_to_dll(root->right,head,prev);
+
+    }
 };
 
 signed main(){
@@ -282,14 +297,23 @@ signed main(){
 
     // cout<<root1->is_mirror_tree(root1,root2);
 
-    FILE *fp=fopen("serialize_deserialize.txt", "w");
-    root1->serialize_tree(root1, fp);
-    fclose(fp);
+    // FILE *fp=fopen("serialize_deserialize.txt", "w");
+    // root1->serialize_tree(root1, fp);
+    // fclose(fp);
 
-    fp=fopen("serialize_deserialize.txt", "r");
-    root2=root2->deserialize(fp);
-    root2->inorder(root2);
-    cout<<nl;
-    root2->preorder(root2);
+    // fp=fopen("serialize_deserialize.txt", "r");
+    // root2=root2->deserialize(fp);
+    // root2->inorder(root2);
+    // cout<<nl;
+    // root2->preorder(root2);
+
+    tree *head=NULL,*prev=NULL;
+    root1->binary_tree_to_dll(root1, head, prev);
+
+    tree* temp=head;
+    while(temp!=NULL){
+        cout<<temp->val<<" ";
+        temp=temp->right;
+    }
     return 0;
 }
