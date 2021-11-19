@@ -164,6 +164,16 @@ public:
 
         return root;
     }
+
+    bool is_identical(tree *root1, tree *root2){
+        if(root1==NULL and root2==NULL)
+            return true;
+        if(root1==NULL or root2==NULL)
+            return false;
+        if(root1->val!=root2->val)
+            return false;
+        return is_identical(root1->left, root2->left) and is_identical(root1->right,root2->right);
+    }
 };
 
 signed main(){
@@ -209,17 +219,32 @@ signed main(){
     // cout<<nl;
     // root->preorder(root);
     
-    int in[]={3,1,4,0,5,2};
-    int pre[]={0,1,3,4,2,5};
-    unordered_map<int,int> mp;
-    for(int i=0;i<6;i++)
-        mp[in[i]]=i;
-    int pre_idx=0;
-    root=root->create_tree_preorder_inorder(pre_idx,0,5,pre,mp);
-    root->inorder(root);
-    cout<<nl;
-    root->preorder(root);
-    cout<<nl;
-    root->postorder(root);
+    // int in[]={3,1,4,0,5,2};
+    // int pre[]={0,1,3,4,2,5};
+    // unordered_map<int,int> mp;
+    // for(int i=0;i<6;i++)
+    //     mp[in[i]]=i;
+    // int pre_idx=0;
+    // root=root->create_tree_preorder_inorder(pre_idx,0,5,pre,mp);
+    // root->inorder(root);
+    // cout<<nl;
+    // root->preorder(root);
+    // cout<<nl;
+    // root->postorder(root);
+
+    tree *root1=NULL, *root2=NULL;
+    root1=root->insert(7,root1);
+    root1=root->insert(2,root1);
+    root1=root->insert(8,root1);
+    root1=root->insert(1,root1);
+    root1=root->insert(5,root1);
+
+    root2=root2->insert(7,root2);
+    root2=root2->insert(2,root2);
+    root2=root2->insert(8,root2);
+    root2=root2->insert(1,root2);
+    root2=root2->insert(4,root2);
+
+    cout<<root1->is_identical(root1,root2);
     return 0;
 }
